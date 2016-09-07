@@ -4,11 +4,11 @@
   "version": "0.1",
   "background": {
     "scripts": [
-      "extension/background.js"
+      "background.js"
     ]
   },
   "browser_action": {
-    "default_icon": "extension/image/icon.png"
+    "default_icon": "image/icon.png"
   },
   "content_scripts": [
     {
@@ -16,9 +16,9 @@
         "<all_urls>"
       ],
       "js": [
-        "extension/vendor/jquery-3.1.0.min.js",
-        "extension/lib/position.js",
-        "extension/content.js"
+        "vendor/jquery-3.1.0.min.js",
+        "lib/position.js",
+        "content.js"
       ]
     }
   ],
