@@ -1,0 +1,5 @@
+.DS_Store
+
+credentials/*.pem
+
+node_modules
