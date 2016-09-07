@@ -7,11 +7,15 @@ router.get('/', function(req, res, next) {
 
   if (req.query.host === 'jobs.lever.co') {
     data = {
-      "title": ".posting-headline h2"
+      "logo": ".main-header-logo img",
+      "title": ".posting-headline h2",
+      "categories": ".posting-categories .posting-category",
+      "responsibilities": "h3:contains('Responsibilities') + .posting-requirements li"
     };
   } else if (req.query.host === 'www.spotify.com') {
     data = {
-      "title": ".job-title"
+      "title": ".job-title",
+      "categories": ".job-tags li a"
     };
   }
 
