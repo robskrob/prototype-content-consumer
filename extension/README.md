@@ -1,5 +1,4 @@
-# prototype-content-consumer - API
-
+# prototype-content-consumer - Extension
 
 ### Background
 
@@ -23,33 +22,25 @@ environment.
 
     `npm install`
 
-4. Create a 'self signed' SSL certificate
+4. Create webpack bundle
 
-    `openssl req -nodes -x509 -newkey rsa:2048 -keyout credentials/key.pem -out credentials/cert.pem -days 365`
+    `npm run build`
 
-5. Start server
+5. Go to chrome://extensions/ in your browser and click developer mode
 
-    `npm start`
+6. Load unpacked extensions, select the extension directory in our project and click Reload
+
+7. Go to, https://jobs.lever.co/pathgather/e700098b-b552-4b10-a5a5-e0e1e49a4154, click the extension and you should see the following in chrome console:
 
 
-### API Endpoints
+*Response Example in Chrome Console*
 
-*Request Example*
+    {
+      title: "Backend Engineer",
+      categories: "New York, NY", "Engineering", "Full-time"
+      url: "https://jobs.lever.co/pathgather/e700098b-b552-4b10-a5a5-e0e1e49a4154"
+    }
 
-    https://localhost/api/v1/selectors?host=jobs.lever.co
-
-*Response Example*
-
-    {"data":
-      {"logo": ".main-header-logo img",
-       "title":".posting-headline h2",
-       "categories":".posting-categories .posting-category",
-       "responsibilities":"h3:contains('Responsibilities') + .posting-requirements li"
-       },
-       "jsonapi": {
-         "version":"1.0.0"
-        }
-     }
 
 ### Contributing
 
