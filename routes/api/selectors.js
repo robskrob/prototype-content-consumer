@@ -7,19 +7,38 @@ var datastore = gcloud.datastore({
   keyFilename: './credentials/prototype-content-consumer-fb8666071546.json'
 });
 
-/* POST /api/v1/selectors */
-router.post('/', function(req, res, next) {
+/* fields => { productname: chair, hostname: www.ikea.com, ...} */
+function saveSelector(fields) {
   let selectorKey = datastore.key('Selector');
   datastore.save({
     key: selectorKey,
-    data: req.body
+    data: fields
   }, function (err) {
     if (err) {
       return res.json({errors: req});
     }
   });
+}
+
+function getSelectorByHostname(hostname, cb) {
+  let query = datastore.createQuery('Selector').filter('hostname', hostname);;
+  datastore.runQuery(query, function (err, selector) {
+    if (!err) {
+      cb(undefined, selector[0].data)
+    }
+  });
+}
 
 
+/* POST /api/v1/selectors
+   body: {
+    hostname=www.macys.com,
+    productname=sweater,
+ }
+*/
+
+router.post('/', function(req, res, next) {
+  saveSelector(req.body)
   res.json({
     "data": req.body,
     "jsonapi": {
@@ -28,47 +47,32 @@ router.post('/', function(req, res, next) {
   });
 })
 
+
 /* GET /api/v1/selectors/:hostname */
 router.get('/:hostname', function(req, res, next) {
-  let data;
-  let query = datastore.createQuery('Selector').filter('hostname', req.params.hostname);;
-  datastore.runQuery(query, function (err, selector) {
+  getSelectorByHostname(req.params.hostname, function(err, selectorData) {
     if (!err) {
       res.json({
-        "data": selector[0].data,
+        "data": selectorData,
         "jsonapi": {
           "version": "1.0.0"
         }
       });
+    } else  {
+      res.json(
+        {
+          errors:
+          [
+            {
+              detail: 'Could not find sellector',
+              source: {"pointer": "api/v1/sellectors"},
+              status: 404
+            }
+          ]
+        }
+      );
     }
   });
 })
-
-
-/* GET /api/v1/selectors */
-router.get('/', function(req, res, next) {
-  let data;
-
-  if (req.query.host === 'jobs.lever.co') {
-    data = {
-      "logo": ".main-header-logo img",
-      "title": ".posting-headline h2",
-      "categories": ".posting-categories .posting-category",
-      "responsibilities": "h3:contains('Responsibilities') + .posting-requirements li"
-    };
-  } else if (req.query.host === 'www.spotify.com') {
-    data = {
-      "title": ".job-title",
-      "categories": ".job-tags li a"
-    };
-  }
-
-  res.json({
-    "data": data,
-    "jsonapi": {
-      "version": "1.0.0"
-    }
-  });
-});
 
 module.exports = router;
