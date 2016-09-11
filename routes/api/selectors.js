@@ -42,8 +42,16 @@ router.get('/', function(req, res, next) {
         'selector': '[itemscope][itemtype="http://schema.org/Product"] [itemscope][itemtype="http://schema.org/Brand"] meta[itemprop="name"]:first',
         'attribute': 'content'
       },
+      'product_brand_url': {
+        'selector': '[itemscope][itemtype="http://schema.org/Product"] [itemscope][itemtype="http://schema.org/Brand"] a[itemprop="url"]:first',
+        'attribute': 'href'
+      },
       'product_offer': {
         'selector': '[itemscope][itemtype="http://schema.org/Product"] [itemscope][itemtype="http://schema.org/Offer"] meta[itemprop="price"]:first',
+        'attribute': 'content'
+      },
+      'product_offer_currency': {
+        'selector': '[itemscope][itemtype="http://schema.org/Product"] [itemscope][itemtype="http://schema.org/Offer"] meta[itemprop="priceCurrency"]:first',
         'attribute': 'content'
       },
       'product_image_url': {
