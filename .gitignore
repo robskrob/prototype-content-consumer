@@ -3,6 +3,7 @@
 config/*
 
 credentials/*
+config/*
 
 node_modules
 
