@@ -1,5 +1,6 @@
 .DS_Store
 
 credentials/*.pem
+credentials/private-key.json
 
 node_modules

@@ -4,7 +4,7 @@ var gcloud = require('gcloud');
 
 var datastore = gcloud.datastore({
   projectId: 'prototype-content-consumer',
-  keyFilename: './credentials/prototype-content-consumer-fb8666071546.json'
+  keyFilename: './credentials/private-key.json'
 });
 
 /* fields => {
