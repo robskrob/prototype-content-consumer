@@ -89,7 +89,7 @@ environment.
 
 ### Collector Resource
 
-When send a POST request to create a collector, the request must have the below URI and include the following key/value pairs in the payload -- hostname, payload and payload['nonce']:
+When sending a POST request to create a collector, the request must have the below URI and include the following key/value pairs in the payload -- hostname, payload and payload['nonce']:
 
 *Request Example*
 
@@ -97,7 +97,8 @@ When send a POST request to create a collector, the request must have the below 
 
     body: {
      hostname=www.ikea.com,
-     payload={ nonce: 'kjhs9182791hakajh19',
+     nonce: 'kjhs9182791hakajh19',
+     payload={
                product_id: kj9128kk,
                product_name: Boots, ...
              }

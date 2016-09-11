@@ -1,59 +1,60 @@
-'use strict';
+let datastore = require('@google-cloud/datastore');
+let config = require('../config/config');
 
-var gcloud = require('google-cloud');
-var datastore = gcloud.datastore({
-  projectId: 'prototype-content-consumer',
-  keyFilename: './credentials/gcloud-data-store-private-key.json'
+let client = datastore({
+  projectId: config.projectId,
+  keyFilename: config.googleCloudKey
 });
 
-function validateProduct(payload) {
-  try {
-    var errors = [];
-    if (Object.keys(payload).length === 0 && payload.constructor === Object) {
-      errors.push("Empty payload")
-    }
+module.exports.client = client;
 
-    if (!payload.payload.nonce) {
-      errors.push("Payload does not have a nonce")
-    }
+module.exports.savePayload = (doc, successCallback, errorCallback) => {
+  validateProduct(doc)
 
-    if (!payload.payload) {
-      errors.push("Payload does not have a payload object")
-    }
-
-    if (!payload.hostname) {
-      errors.push("Payload does not have a hostname")
-    }
-
-    if (errors.length >= 1) {
-      throw errors
-    }
+  if (!validateProduct(doc)) {
+    return errorCallback(doc.errors)
   }
-  catch (e) {
-     return errorCallback(e);
-  }
-}
 
-var model = {
-  savePayload: function(payload, successCallback, errorCallback) {
-    validateProduct(payload, errorCallback)
+  const collectorKey = client.key('Collector');
+  const now = new Date()
 
-    const collectorKey = datastore.key('Collector');
-    const now = new Date()
-    payload['created_at'] = now
-    payload['updated_at'] = now
+  doc['created_at'] = now
+  doc['updated_at'] = now
 
-    datastore.save({
-      key: collectorKey,
-      data: payload
-    }, function (err) {
-      if (err) {
-        return errorCallback(err);
-      }
-    });
-
-    return successCallback(true)
-  }
+  client.save({
+    key: collectorKey,
+    data: doc
+  }, function (err, res) {
+    if (err) {
+      errorCallback(err);
+    } else {
+      successCallback(collectorKey);
+    }
+  });
 };
 
-module.exports = model;
+function validateProduct(doc) {
+  doc.errors = []
+
+  if (Object.keys(doc).length === 0) {
+    errors.push("Empty payload")
+  }
+
+  if (!doc.nonce) {
+    errors.push("Payload does not have a nonce")
+  }
+
+  if (!doc.payload) {
+    errors.push("Payload does not have a payload object")
+  }
+
+  if (!doc.hostname) {
+    errors.push("Payload does not have a hostname")
+  }
+
+  if (doc.errors.length >=1) {
+    return false
+  } else {
+    return true
+  }
+}
