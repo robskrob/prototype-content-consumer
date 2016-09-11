@@ -3,15 +3,15 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     console.log('background.js', 'send message');
 
     chrome.tabs.sendMessage(tabs[0].id, {
-      "type": "capture_position"
+      "type": "capture_product"
     });
   });
 });
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    if (request.type === "processed_position") {
-      console.log('background.js', request.position);
+    if (request.type === "processed_product") {
+      console.log('background.js', request.product);
     }
   }
 );
