@@ -46,16 +46,6 @@ function saveCollector(fields) {
   }
 }
 
-/* POST /api/v1/collectors
-   body: {
-    hostname=www.ikea.com,
-    payload={ nonce: 'kjhs9182791hakajh19',
-              product_id: kj9128kk,
-              product_name: Boots, ...
-            }
-  }
-*/
-
 router.post('/', function(req, res, next) {
   let promise = new Promise(function(resolve, reject){
     var res = saveCollector(req.body)

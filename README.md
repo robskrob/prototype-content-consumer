@@ -87,6 +87,23 @@ environment.
       "version":"1.0.0"
     }
 
+### Collector Resource
+
+When send a POST request to create a collector, the request must have the below URI and include the following key/value pairs in the payload -- hostname, payload and payload['nonce']:
+
+*Request Example*
+
+    `POST /api/v1/collectors
+
+    body: {
+     hostname=www.ikea.com,
+     payload={ nonce: 'kjhs9182791hakajh19',
+               product_id: kj9128kk,
+               product_name: Boots, ...
+             }
+   }`
+
+
 ### Contributing
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
