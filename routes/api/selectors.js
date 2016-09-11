@@ -10,6 +10,7 @@ var datastore = gcloud.datastore({
 /* fields => { productname: chair, hostname: www.ikea.com, ...} */
 function saveSelector(fields) {
   let selectorKey = datastore.key('Selector');
+  // TODO: created at / updated at fields
   datastore.save({
     key: selectorKey,
     data: fields
@@ -20,11 +21,11 @@ function saveSelector(fields) {
   });
 }
 
-function getSelectorByHostname(hostname, cb) {
+function getSelectorByHostname(hostname, callback) {
   let query = datastore.createQuery('Selector').filter('hostname', hostname);;
   datastore.runQuery(query, function (err, selector) {
     if (!err) {
-      cb(undefined, selector[0].data)
+      callback(undefined, selector[0].data)
     }
   });
 }

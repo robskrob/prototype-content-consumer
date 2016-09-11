@@ -17,6 +17,7 @@ var datastore = gcloud.datastore({
 
 function saveCollector(fields) {
   let collectorKey = datastore.key('Collector');
+  // TODO: created at / updated at fields
   datastore.save({
     key: collectorKey,
     data: fields
@@ -26,19 +27,6 @@ function saveCollector(fields) {
     }
   });
 }
-
-function getCollectorByPageurl(pageurl, cb) {
-  let query = datastore.createQuery('Collector').filter('pageurl', pageurl);;
-  datastore.runQuery(query, function (err, collector) {
-    if (!err && !!collector[0]) {
-      cb(undefined, collector[0].data)
-    }
-     else {
-       cb(true, false)
-     }
-  });
-}
-
 
 /* POST /api/v1/collectors
    body: {
