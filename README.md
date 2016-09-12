@@ -45,7 +45,7 @@ environment.
 
 *Request Example*
 
-    https://localhost/api/v1/selectors/www.lumens.com
+    https://localhost/api/v1/suppliers/www.lumens.com
 
 *Response Example*
 
@@ -87,13 +87,13 @@ environment.
       "version":"1.0.0"
     }
 
-### Collector Resource
+### Sample Resource
 
-When sending a POST request to create a collector, the request must have the below URI and include the following key/value pairs in the payload -- hostname, payload and payload['nonce']:
+When sending a POST request to create a sample, the request must have the below URI and include the following key/value pairs in the payload -- hostname, payload and payload['nonce']:
 
 *Request Example*
 
-    `POST /api/v1/collectors
+    `POST /api/v1/samples
 
     body: {
      hostname=www.ikea.com,
