@@ -1,0 +1,14 @@
+{
+  "development": {
+    "projectId": "content-consumer",
+    "googleCloudKey": "/path/to/credentials/googleCloudKey.json"
+  },
+  "test": {
+    "projectId": "content-consumer-test",
+    "googleCloudKey": "/path/to/credentials/googleCloudKey.json"
+  },
+  "production": {
+    "projectId": "content-consumer-production",
+    "googleCloudKey": "/path/to/credentials/googleCloudKey.json"
+  }
+}

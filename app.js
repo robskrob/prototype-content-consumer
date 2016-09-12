@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/v1/selectors', require('./routes/api/selectors'));
+app.use('/api/v1/suppliers', require('./routes/api/suppliers'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,6 +1,6 @@
 let $ = require('jquery');
 
-let setObjectValue = function(object, key, value) {
+let setObjectValue = (object, key, value) => {
   if (value) {
     object[key] = value;
   }
@@ -8,18 +8,24 @@ let setObjectValue = function(object, key, value) {
   return object;
 };
 
-let constructProduct = function(callback) {
-  let url      = 'https://localhost/api/v1/selectors';
-  let promise  = $.getJSON(url, {
-    host: location.host
-  });
+let constructProduct = (host, callback) => {
+  let url      = `https://localhost/api/v1/suppliers/${host}`;
+  let promise  = $.getJSON(url);
 
-  promise.done(function(json, status, xhr) {
-    let object = Object.keys(json.data).reduce(function(object, key) {
-      let selector  = json.data[key].selector;
-      let attribute = json.data[key].attribute;
+  promise.done((json, status, xhr) => {
+    let supplier = json.data[0];
+    let selectors = supplier.attributes.selectors;
 
-      let elements = $(selector);
+    let initialObject = {
+      host: location.hostname,
+      location: location.href
+    };
+
+    let object = Object.keys(selectors).reduce((object, key) => {
+      let selector  = selectors[key];
+      let attribute = selector.attribute;
+
+      let elements  = $(selector.path);
 
       if (elements.length > 1) {
         object[key] = [];
@@ -29,19 +35,16 @@ let constructProduct = function(callback) {
         }
 
       } else {
-        object = setObjectValue(object, key, elements.attr(attribute));
+        object = setObjectValue(object, selector.name, elements.attr(attribute));
       }
 
       return object;
-    }, {});
-
-    object['location'] = location.href;
-    object['host']     = location.hostname;
+    }, initialObject);
 
     callback(object);
   })
 
-  promise.fail(function() {
+  promise.fail(() => {
     throw 'A selector could not be found'
   });
 };

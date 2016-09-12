@@ -5,7 +5,7 @@ chrome.runtime.onMessage.addListener(
     console.log('content.js', 'receive message');
 
     if (request.type === "capture_product") {
-      capture.constructProduct(function(product) {
+      capture.constructProduct(location.host, function(product) {
         console.log('product:', product);
 
         chrome.runtime.sendMessage({
