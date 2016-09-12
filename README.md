@@ -45,7 +45,7 @@ environment.
 
 *Request Example*
 
-    https://localhost/api/v1/selectors/www.lumens.com
+    https://localhost/api/v1/suppliers/www.lumens.com
 
 *Response Example*
 
@@ -86,6 +86,24 @@ environment.
     "jsonapi": {
       "version":"1.0.0"
     }
+
+### Sample Resource
+
+When sending a POST request to create a sample, the request must have the below URI and include the following key/value pairs in the payload -- hostname, payload and payload['nonce']:
+
+*Request Example*
+
+    `POST /api/v1/samples
+
+    body: {
+     hostname=www.ikea.com,
+     nonce: 'kjhs9182791hakajh19',
+     payload={
+               product_id: kj9128kk,
+               product_name: Boots, ...
+             }
+   }`
+
 
 ### Contributing
 

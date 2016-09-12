@@ -20,6 +20,7 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/suppliers', require('./routes/api/suppliers'));
+app.use('/api/v1/samples',   require('./routes/api/samples'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -22,6 +22,11 @@ let serializer = (attributes) => {
   };
 };
 
+module.exports.sample = serializer([
+  'host',
+  'payload'
+]);
+
 module.exports.supplier = serializer([
   'selectors'
 //  'source_id',

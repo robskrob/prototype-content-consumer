@@ -10,3 +10,13 @@ suppliers.forEach((supplier) => {
     console.log(`failed to create ${supplier.name} supplier`, error);
   })
 });
+
+let samples = require('./seeds/samples.json');
+
+samples.forEach((sample) => {
+  datastore.saveSample(null, sample, (sample) => {
+    console.log(`successfully created ${sample.host} sample`);
+  }, (error) => {
+    console.log(`failed to create ${sample.host} sample`, error);
+  })
+});

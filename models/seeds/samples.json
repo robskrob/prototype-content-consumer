@@ -1,0 +1,14 @@
+[{
+	"host": "www.lumens.com",
+	"nonce": "123129810192290",
+	"payload": {
+		"location": "http://www.lumens.com/bank-seating-collection-by-blu-dot-PS109222.html#cgid=%0A%09%0A%09%09175%0A%09%0A&&tileIndex=1",
+		"product_brand_name": "Blu Dot",
+		"product_brand_url": "/blu-dot/",
+		"product_image_url": "http://images.lumens.com/is/image/Lumens/PS109222",
+		"product_offer": "1999.00",
+		"product_offer_currency": "USD",
+		"product_url": "http://www.lumens.com/bank-seating-collection-by-blu-dot-PS109222.html",
+		"source_id": "PS109222"	
+	}
+}]

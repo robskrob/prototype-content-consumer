@@ -50,16 +50,29 @@ module.exports.save = (id, kind, dataset, successCallback, errorCallback) => {
     if (error) {
       errorCallback(error);
     } else {
-      successCallback(dataset.data);
+      successCallback(entity);
     }
   });
+};
+
+module.exports.saveSample = (id, payload, successCallback, errorCallback) => {
+  let dataset = {
+    data: payload,
+    indexedColumns: [
+      'host',
+      'nonce'
+    ]
+  };
+
+  module.exports.save(id, 'Sample', dataset, successCallback, errorCallback);
 };
 
 module.exports.saveSupplier = (id, data, successCallback, errorCallback) => {
   let dataset = {
     data: data,
     indexedColumns: [
-      'selectors'
+      'host',
+      'name'
     ]
   };
 
@@ -78,7 +91,7 @@ let toDatastore = (dataset) => {
       list.push({
         name: c,
         value: dataset.data[c],
-        excludeFromIndexes: (dataset.nonIndexed || []).indexOf(c) !== -1
+        excludeFromIndexes: (dataset.indexedColumns || []).indexOf(c) === -1
       })
     }
 
