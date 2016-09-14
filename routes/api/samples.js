@@ -1,15 +1,22 @@
 let express = require('express');
-let router = express.Router();
-let datastore = require('../../models/datastore');
-let Serialize = require('../../models/serialize')
+let bodyParser = require('body-parser')
+let Entity = require('../../models/entity');
 
-router.post('/', function(req, res, next) {
-  datastore.saveSample(null, req.body, (sample) => {
-    res.json(Serialize.sample(sample));
-  }, (errors) => {
-    res.status(400);
-    res.json(errors);
-  });
+let router = express.Router();
+let jsonParser = bodyParser.json()
+
+router.post('/', jsonParser, function(req, res, next) {
+  Entity.findSupplier(req.body.host)
+    .then((supplier) => {
+      return Entity.saveSupplierSample(supplier[0], req.body)
+    })
+    .then((sample) => {
+      res.json(Entity.serializeJsonSample(sample));
+    })
+    .catch((errors) => {
+      res.status(400);
+      res.json(errors);
+    })
 });
 
 module.exports = router;

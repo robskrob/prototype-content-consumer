@@ -1,17 +1,18 @@
 let express = require('express');
-let datastore = require('../../models/datastore');
-let Serialize = require('../../models/serialize');
+let Entity = require('../../models/entity');
 
 let router = express.Router();
 
 /* GET /api/v1/selectors/:host */
 router.get('/:host', (req, res, next) => {
-  datastore.findSupplier(req.params.host, (supplier) => {
-    res.json(Serialize.supplier(supplier));
-  }, (errors) => {
-    res.status(404);
-    res.json({});
-  });
+  Entity.findSupplier(req.params.host)
+    .then((supplier) => {
+      res.json(Entity.serializeJsonSupplier(supplier));
+    })
+    .catch((errors) => {
+      res.status(404);
+      res.json({});
+    });
 });
 
 /* GET /api/v1/selectors */
