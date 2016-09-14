@@ -8,3 +8,4 @@ config/*
 node_modules
 
 npm-debug.log
+startup-script.sh
