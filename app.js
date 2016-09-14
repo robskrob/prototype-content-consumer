@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+var morgan = require('morgan');
 var bodyParser = require('body-parser');
 
 var app = express();
@@ -10,7 +10,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 if (process.env.NODE_ENV == 'development') {
-  app.use(logger('dev'));
+  app.use(morgan('combined'));
 }
 
 app.use(favicon(__dirname + '/public/favicon.ico'))
