@@ -1,17 +1,15 @@
-chrome.browserAction.onClicked.addListener(function(tab) {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    console.log('background.js', 'send message');
+let capture = require('./lib/capture').default;
 
-    chrome.tabs.sendMessage(tabs[0].id, {
-      "type": "capture_product"
-    });
-  });
-});
+//chrome.browserAction.onClicked.addListener((tab) => {
+//  chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+//    chrome.tabs.sendMessage(tabs[0].id, {
+//      "type": "capture_sample"
+//    });
+//  });
+//});
 
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    if (request.type === "processed_product") {
-      console.log('background.js', request.product);
-    }
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.type === "publish_samples") {
+    capture.publishSamples(request.samples);
   }
-);
+});
